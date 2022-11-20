@@ -1,4 +1,4 @@
-Package: testing
+Package: test_vcr
 Type: Package
 Title: What the Package Does Using Title Case
 Version: 1.0
