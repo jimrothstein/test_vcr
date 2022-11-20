@@ -1,20 +1,18 @@
 Package: test_vcr
 Type: Package
-Title: What the Package Does Using Title Case
-Version: 1.0
+Title: Test package "vcr" with tests from package "tinytest" 
+Version: 0.1
 Date: 2022-11-10
-Author: Your Name
+Author: jim
 Maintainer: Your Name <your@email.com>
-Description: More details about what the package does. See
+Description: This package uses tinytest extensively.   As convenience, package tinytest is included in Depends.   More details about what the package does. See
         <http://cran.r-project.org/doc/manuals/r-release/R-exts.html#The-DESCRIPTION-file>
         for details on how to write this part.
 License: GPL (>= 2)
 Depends:
+		tinytest
 Imports:
 		vcr,
-		tinytest,
-		R6
 Suggests: 
-    tinytest
 Encoding: UTF-8
 RoxygenNote: 7.2.2
