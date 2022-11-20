@@ -3,19 +3,78 @@
 #---------------------------------------------------------------------------------------------
 #		REF
 #		TESTS:		configure.R
+#
 #---------------------------------------------------------------------------------------------
+if (F) {
+	as.data.frame(tinytest::run_test_file("inst/tinytest/test_configure.R")	)
+}
+
 #
-#
-search()
+library(vcr)
+library(R6)
+
+search() 
 loadedNamespaces()
-#	# teardown
+
+
+##	from vcr_configure help:
+the_dir = "inst/tinytest/"
+
+# use write_disk_path/fixtures
+cassette_dir = paste0(the_dir, "fixtures")
+file_dirs =		 paste0(the_dir, "files")
+#
+#	# teardown (TODO ...)
 tinytest::expect_true(vcr_configure_reset())
+# vcr_configure(dir=tmpdir, write_disk_path = file.path(tmpdir, "files"))
+vcr_configure(dir=the_dir,  write_disk_path = file_dirs)
+
+#	return current configuration and test
+cl  <- vcr_configuration()
+	tinytest::expect_true(is.R6(cl))
+  expect_false(is.R6Class(cl))
+  expect_true(all(class(cl) %in% c("VCRConfig", "R6")))
 
 
-#	VCRConfig
-	expect_true(class(VCRConfig) == "R6ClassGenerator")
+#	test constructor 
+VCRConfig  <- R6::R6Class("VCRConfig")$new()
+expect_false(is.R6Class("VCRConfig"))
+expect_true(is.R6(VCRConfig))
 
 
+#	test fails well, infert
+expect_warning(
+  expect_error( vcr_configure(record = "asdfadfs", 
+		info = "'record' value of 'asdfadfs' is not in the allowed set")
+	)
+)
+#
+
+#		test config fails well with invalid request matchers
+##	    TODO:   check test_that syntax   Who handles error:  vcr_configure or testthat_expect_error
+##	
+  tinytest::expect_error(
+	expect_warning(
+    vcr_configure(match_requests_on = "x",
+    "1 or more 'match_requests_on' values \\(x\\) is not in the allowed set"
+  )
+)
+)
+
+##  
+## test_
+# test vcr_configure() only affects settings passed	as arguments 
+# use vcr:::vcr_c to access this internal object vcr_configure_reset()
+	vcr_configure(dir="olddir", record="none")
+  config1  <- vcr:::vcr_c$clone()
+
+	vcr_configure(dir="newdir")
+	config2  <- vcr:::vcr_c$clone()
+
+	expect_equal(config1$record, "none")
+	expect_equal(config2$record, "none")
+tinytest::exit_file("tinytest is stopping")
+  	
 #	------------------------
 ##			LEGACY
 #	------------------------
