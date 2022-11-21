@@ -1,4 +1,6 @@
 #	test_Cassette.R
+library(tinytest)
+library(vcr)
 expect_true(class(Cassette) == "R6ClassGenerator")
 expect_false(class(Cassette) == "R6")
 cl  <- Cassette$new(name="stuff")
@@ -23,11 +25,11 @@ expect_error(
     Cassette$new(name = "stuff2", match_requests_on = "x"),
     "1 or more 'match_requests_on' values \\(x\\) is not in the allowed set"
   )
-})
+
 
 #		http_interaction
 #
-  #### Prepare http responses
+  #### Prepare http responses, saveas files
 
 	# do ONCE
   if (F) {
@@ -52,23 +54,25 @@ expect_error(
   # crul, with non-image response body
   # $response$body should be class `character`
 
-  load(paste0(the_dir, "crul_resp1.rda"))
+	#load(paste0(the_dir, "crul_resp1.rda"))
+load("crul_resp1.rda")
+ls()
   aa <- zz$make_http_interaction(crul_resp1)
-  expect_is(aa, "HTTPInteraction")
+  expect_inherits(aa, "HTTPInteraction")
 
-###				HERE  BEGIN
-  expect_is(aa$request, "Request")
-  expect_is(aa$response, "VcrResponse")
-  expect_is(aa$response$body, "character")
+  expect_inherits(aa$request, "Request")
+  expect_inherits(aa$response, "VcrResponse")
+  expect_inherits(aa$response$body, "character")
 
   # crul, with image response body
   # $response$body should be class `raw`
-  load("crul_resp2.rda")
+  #load(paste0(the_dir, "crul_resp2.rda"))
+load("crul_resp2.rda")
   bb <- zz$make_http_interaction(crul_resp2)
-  expect_is(bb, "HTTPInteraction")
-  expect_is(bb$request, "Request")
-  expect_is(bb$response, "VcrResponse")
-  expect_is(bb$response$body, "raw")
+  expect_inherits(bb, "HTTPInteraction")
+  expect_inherits(bb$request, "Request")
+  expect_inherits(bb$response, "VcrResponse")
+  expect_inherits(bb$response$body, "raw")
 
   # eject cassette
   ## expect warning from empty cassette checker
@@ -76,7 +80,7 @@ expect_error(
 
 
 #---------
-			LEGACY
+			#LEGACY
 #---------
 #
 if (F) {

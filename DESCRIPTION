@@ -1,13 +1,11 @@
-Package: test_vcr
+Package: testVCR
 Type: Package
 Title: Test package "vcr" with tests from package "tinytest" 
 Version: 0.1
 Date: 2022-11-10
 Author: jim
 Maintainer: Your Name <your@email.com>
-Description: This package uses tinytest extensively.   As convenience, package tinytest is included in Depends.   More details about what the package does. See
-        <http://cran.r-project.org/doc/manuals/r-release/R-exts.html#The-DESCRIPTION-file>
-        for details on how to write this part.
+Description: This package uses tinytest extensively.   
 License: GPL (>= 2)
 Depends:
 		tinytest

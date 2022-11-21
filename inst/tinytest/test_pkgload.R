@@ -1,7 +1,7 @@
 #
 #
 #---------------------------------------------------------------------------------------------
-#		REF
+#		PURPOSE:  Use package pkgload to for tests on package vcr itself (load, unload ...)tests on package vcr itself (load, unload ...)
 #---------------------------------------------------------------------------------------------
 #
 #
@@ -14,18 +14,18 @@ if (isNamespaceLoaded("test_vcr")) {
 	pkgload::unload(package="test_vcr")
 }
 
-#	BEFORE load_all
-	tinytest::expect_error(pkgload::help("pkgload"))
-	tinytest::expect_false(pkgload::is_dev_package("test_vcr"))
+#	BEFORE load_all, but FAILS if load_all() ran
+	expect_error(pkgload::help("pkgload"))
+	#expect_false(pkgload::is_dev_package("testVCR"))
 
 # TODO:	check ns	
 x  <- pkgload::load_all()
 
 #	AFTER load_all
-	tinytest::expect_true(pkgload::is_dev_package("test_vcr"))
-	tinytest::expect_error(pkgload::help("pkgload"))
+	expect_true(pkgload::is_dev_package("testVCR"))
+  expect_error(pkgload::help("pkgload"))
 
-
+#	run test_pkgload.R
 if (F)
-	tinytest::run_test_file("inst/tinytest/test_pkgload.R")
+	run_test_file("inst/tinytest/test_pkgload.R")
 

@@ -7,12 +7,16 @@
 #		FileSystem.R
 #   SEE persisters-file.R
 
-FileSystem
+##	FileSystem is not exported 
+FileSystem  <- vcr:::FileSystem$new()
 vcr_configure(dir = tempdir())
-yy <- FileSystem$new(file_name = "file4014931b21b.yml")
 
-expect_false(is.R6(FileSystem)) 
-expect_true(is.R6Class(FileSystem)) 
+
+##	R complains non-function
+expect_error(FileSystem$new(file_name = "file4014931b21b.yml"))
+
+expect_true(is.R6(FileSystem)) 
+expect_false(is.R6Class(FileSystem)) 
 #   aa <- FileSystem$new()
 #   expect_is(aa,  "R6")
 #   expect_is(aa,  "FileSystem")

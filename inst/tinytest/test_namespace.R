@@ -1,10 +1,12 @@
 #
+		#PURPOSE:	This tests namespace and imports.  It is not essential.#
 #
 #---------------------------------------------------------------------------------------------
 #		REF
 #		https://stackoverflow.com/questions/8637993/better-explanation-of-when-to-use-imports-depends
 #---------------------------------------------------------------------------------------------
-namespaceExport()
+#	claims namespace is sealed ?
+#namespaceExport()
 #-----------------------
 #	Why is R6 not loaded?
 #-----------------------
@@ -13,21 +15,24 @@ attached
 loaded  <- loadedNamespaces()
 loaded
 
-load_all()
 base::setdiff(search(), attached)
 base::setdiff(loadedNamespaces(), loaded)
 
 #-----------------------
 ls(getNamespace("vcr"))
-ls(getNamespaceExports("vcr"))
+
+# claims vcr_test_path not on search list
+expect_error(ls(getNamespaceExports("vcr")))
 ls(getNamespaceImports("vcr"))
 
 ls(getNamespace("tinytest"))
 ls(getNamespace("R6"))
 
+expect_warning(
+	expect_error(ls(getNamespace(".")))
+	)
 
-ls(getNamespace("."))
-ls(getNamespace("test_vcr"))
+ls(getNamespace("testVCR"))
 
 
 

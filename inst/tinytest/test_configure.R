@@ -25,13 +25,14 @@ cassette_dir = paste0(the_dir, "fixtures")
 file_dirs =		 paste0(the_dir, "files")
 #
 #	# teardown (TODO ...)
-tinytest::expect_true(vcr_configure_reset())
+#tinytest::expect_true(vcr_configure_reset())
+expect_true(vcr_configure_reset())
 # vcr_configure(dir=tmpdir, write_disk_path = file.path(tmpdir, "files"))
 vcr_configure(dir=the_dir,  write_disk_path = file_dirs)
 
 #	return current configuration and test
 cl  <- vcr_configuration()
-	tinytest::expect_true(is.R6(cl))
+	expect_true(is.R6(cl))
   expect_false(is.R6Class(cl))
   expect_true(all(class(cl) %in% c("VCRConfig", "R6")))
 
@@ -53,12 +54,10 @@ expect_warning(
 #		test config fails well with invalid request matchers
 ##	    TODO:   check test_that syntax   Who handles error:  vcr_configure or testthat_expect_error
 ##	
-  tinytest::expect_error(
 	expect_warning(
     vcr_configure(match_requests_on = "x",
     "1 or more 'match_requests_on' values \\(x\\) is not in the allowed set"
   )
-)
 )
 
 ##  
