@@ -11,6 +11,7 @@ Depends:
 		tinytest
 Imports:
 		vcr,
+    R6
 Suggests: 
 Encoding: UTF-8
 RoxygenNote: 7.2.2

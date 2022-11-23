@@ -15,6 +15,11 @@ attached
 loaded  <- loadedNamespaces()
 loaded
 
+
+## Compare after load_all()
+load_all()
+
+##  compare
 base::setdiff(search(), attached)
 base::setdiff(loadedNamespaces(), loaded)
 

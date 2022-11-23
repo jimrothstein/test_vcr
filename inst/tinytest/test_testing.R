@@ -1,11 +1,9 @@
 #------------------------------------------------------------
 #		test_testing.R
-#		PURPOSE:		examples tinytests I sometimes found non obvious
+#		PURPOSE:		tinytest examples & practice,  some I found non obvious
+#		USAGE:      tinytest::run_test_file(file="inst/tinytest/test_testing.R")
 #------------------------------------------------------------
 
-##	to test  
-##	tinytest::run_test_file(file="inst/tinytest/test_testing.R")
-##
 
 expect_equal(1 + 1, 2)
 
@@ -32,10 +30,16 @@ expect_error(stop("an error"))
 
 ##	tinytests return?
 ret  <- expect_equal(1+1,2)
-ret
-str(ret)
+#ret
+#str(ret)
 expect_true(is.atomic(ret))
-class(ret)
+#class(ret)
 expect_false(R6::is.R6(ret))
 
 
+# 	run tests on ONE set, such as test_pkgload.R
+if (FALSE) {
+  run_test_file("inst/tinytest/test_pkgload.R")
+
+  run_test_dir("inst/tinytest/")
+}
